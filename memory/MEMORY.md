@@ -1,0 +1,1 @@
+- [Project Root](topic_tech_stack.md) — Tech stack and project context

@@ -1,0 +1,2 @@
+# Note: Java pre-commit hooks are installed via scripts/setup-hooks.sh
+# which sets up git hooks directly.

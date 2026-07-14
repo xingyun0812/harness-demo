@@ -1,0 +1,69 @@
+{
+  "model": "claude-sonnet-4-6-20250618",
+  "permissions": {
+    "allow": [
+      "ls",
+      "cat",
+      "find",
+      "grep",
+      "git",
+      "curl",
+      "mvn",
+      "java",
+      "javac",
+      "docker",
+      "npm",
+      "node",
+      "pwd",
+      "echo",
+      "mkdir",
+      "touch",
+      "cp",
+      "mv",
+      "rm",
+      "chmod"
+    ],
+    "dangerous": [
+      ":(){ :|:& };:",
+      "dd if=",
+      "mkfs",
+      "fdisk",
+      "shutdown",
+      "reboot",
+      "chmod -R 777",
+      "chown -R",
+      "eval",
+      "exec",
+      "> /dev/sda",
+      "> /dev/null",
+      "wget -O /etc",
+      "curl | sh",
+      "curl | bash",
+      "wget | sh",
+      "wget | bash"
+    ]
+  },
+  "hooks": {
+    "PostStart": "echo 'harness-demo session started'"
+  },
+  "allow": [
+    "Bash:default:read",
+    "Bash:ls:*",
+    "Bash:cat:*",
+    "Bash:find:*",
+    "Bash:grep:*",
+    "Bash:git:*",
+    "Bash:pwd:*",
+    "Bash:echo:*",
+    "Bash:mkdir:*",
+    "Bash:touch:*",
+    "Bash:cp:*",
+    "Bash:mv:*",
+    "Bash:rm:*",
+    "Bash:mvn:*",
+    "Bash:java:*",
+    "Bash:docker:*",
+    "Bash:curl:*",
+    "Bash:chmod:*"
+  ]
+}

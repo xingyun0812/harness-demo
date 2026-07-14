@@ -1,0 +1,11 @@
+{
+  "features": [
+    {
+      "id": "harness-setup",
+      "name": "Harness Setup",
+      "status": "completed",
+      "verification": "All 7 areas of harness checklist covered",
+      "completed_at": "2026-07-08"
+    }
+  ]
+}
