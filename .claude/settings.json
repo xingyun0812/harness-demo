@@ -1,12 +1,9 @@
 {
-  "model": "claude-sonnet-4-6-20250618",
   "permissions": {
     "allow": [
       "Bash(mvn *)",
       "Bash(git *)",
       "Bash(java *)",
-      "Bash(curl *)",
-      "Bash(docker *)",
       "Bash(pwd)",
       "Bash(echo *)",
       "Bash(ls *)",
@@ -15,13 +12,13 @@
       "Bash(which *)",
       "Bash(type *)"
     ],
+    "ask": [
+      "Bash(curl *)"
+    ],
     "deny": [
       "Bash(git push --force *)",
       "Bash(git reset --hard *)",
       "Bash(rm -rf *)"
     ]
-  },
-  "hooks": {
-    "PostStart": "echo 'harness-demo session started'"
   }
 }

@@ -10,6 +10,7 @@ target/
 # IDE
 .idea/
 *.iml
+.mybatis/
 .vscode/
 .settings/
 .project

@@ -6,6 +6,13 @@
       "status": "completed",
       "verification": "All 7 areas of harness checklist covered",
       "completed_at": "2026-07-08"
+    },
+    {
+      "id": "health-endpoint",
+      "name": "Health Check Endpoint",
+      "status": "completed",
+      "verification": "mvn verify passes (JaCoCo >60%), curl /api/health returns 200 OK",
+      "completed_at": "2026-07-14"
     }
   ]
 }

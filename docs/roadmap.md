@@ -2,18 +2,20 @@
 
 ## Current Status
 
-Initial project scaffold — no features implemented yet.
+Harness setup complete, health endpoint deployed, coverage gate passing.
 
 ## Planned Features
 
-- [ ] Health check endpoint
+- [x] Health check endpoint (`GET /api/health`)
 - [ ] Example CRUD REST API
 - [ ] Database integration
-- [ ] Docker support
-- [ ] CI/CD pipeline
+- [ ] CI/CD pipeline connected (workflow exists; needs remote)
+
+## Out of Scope (for now)
+
+- Docker / Compose — harness demo 用 Maven 本地运行足够，不强制容器化
 
 ## Known Limitations
 
 - No database configured yet
-- No Dockerfile
-- No CI pipeline connected
+- No git remote / CI not connected yet

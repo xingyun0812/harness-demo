@@ -78,6 +78,9 @@
                                     </limits>
                                 </rule>
                             </rules>
+                            <excludes>
+                                <exclude>com/example/harnessdemo/HarnessDemoApplication.class</exclude>
+                            </excludes>
                         </configuration>
                     </execution>
                     <execution>

@@ -48,8 +48,8 @@ mvn org.owasp:dependency-check-maven:check
 | Purpose | Path |
 |---------|------|
 | Application config | `src/main/resources/application.yml` |
-| Docker Compose | `docker-compose.yml` (TODO) |
-| Dockerfile | `Dockerfile` (TODO) |
+
+本地用 `mvn spring-boot:run` 即可。Docker / Compose **非必须**，本 demo 不维护；需要容器化部署时再补。
 
 ## Key Architecture Files
 
