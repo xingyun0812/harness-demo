@@ -28,7 +28,8 @@ class HealthControllerTest {
 
     mockMvc.perform(get("/api/health"))
             .andExpect(status().isOk())
-            .andExpect(jsonPath("$.status").value("OK"))
-            .andExpect(jsonPath("$.timestamp").value(123L));
+            .andExpect(jsonPath("$.code").value(200))
+            .andExpect(jsonPath("$.data.status").value("OK"))
+            .andExpect(jsonPath("$.data.timestamp").value(123L));
   }
 }
