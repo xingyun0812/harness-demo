@@ -20,5 +20,21 @@
       "Bash(git reset --hard *)",
       "Bash(rm -rf *)"
     ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "agent",
+            "if": "Bash(git push *)",
+            "prompt": "Push gate: 串行执行以下两项检查，任一失败则阻止 push。\n\n### Step 1: code-review\n读取当前所有变更文件的 diff，按 code-review agent 的审查标准逐文件审查。如有 CRITICAL 问题，输出 \"BLOCKED: code-review: <原因>\" 并结束（阻止 push）。\n\n### Step 2: eval-gate\n运行 mvn verify 确认编译、测试、覆盖率均通过，再运行 mvn checkstyle:check 确认代码风格合规。如有失败输出 \"BLOCKED: eval-gate: <原因>\" 并结束。\n\n### 通过\n两项都通过则输出 \"PASS: push-gate cleared\" 并允许 push 继续。\n\n项目上下文：Java 17 + Spring Boot 3.2 + Maven，覆盖率阈值 60%，架构变更必须有 ADR。",
+            "statusMessage": "Running push gate: code-review + eval-gate...",
+            "timeout": 300
+          }
+        ]
+      }
+    ]
   }
 }

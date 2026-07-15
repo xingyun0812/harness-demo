@@ -1,0 +1,9 @@
+-- 用户表
+CREATE TABLE IF NOT EXISTS sys_user (
+    id          BIGINT AUTO_INCREMENT PRIMARY KEY,
+    username    VARCHAR(64)  NOT NULL,
+    email       VARCHAR(128),
+    phone       VARCHAR(32),
+    created_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);

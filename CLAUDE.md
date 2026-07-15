@@ -43,6 +43,22 @@ mvn org.owasp:dependency-check-maven:check
 - **Architecture Decisions**: `docs/adr/` — mandatory for non-trivial choices
 - **Process**: Issue → feature branch → PR — No direct pushes to `main`
 
+## Interaction Rules
+
+### Clarify Before Acting
+
+需求不明确时反问，不猜测。如果存在多种理解，列出选项让我确认。不确定就是不确定，不要替我做决定。
+
+### Surgical Changes
+
+只改必须改的，只清理自己造成的垃圾。
+
+- 不改动无关代码、注释、格式
+- 不重构没坏的东西
+- 匹配现有风格，即使你更喜欢另一种写法
+- 发现无关的死代码，提一句就行，不要删
+- 你的改动造成的 unused import/变量必须清理，但不要清理本来就存在的
+
 ## Config & Deploy
 
 | Purpose | Path |
