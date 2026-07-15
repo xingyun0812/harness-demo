@@ -10,7 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @WebMvcTest(UserController.class)
 class GlobalExceptionHandlerTest {
@@ -27,15 +29,16 @@ class GlobalExceptionHandlerTest {
 
     mockMvc.perform(get("/api/users/99"))
             .andExpect(status().isNotFound())
-            .andExpect(jsonPath("$.message").value("User not found: 99"));
+            .andExpect(jsonPath("$.code").value(404))
+            .andExpect(jsonPath("$.msg").value("User not found: 99"));
   }
 
   @Test
   void shouldReturn400ForValidationError() throws Exception {
-    mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post("/api/users")
-            .contentType(org.springframework.http.MediaType.APPLICATION_JSON)
+    mockMvc.perform(MockMvcRequestBuilders.post("/api/users")
+            .contentType(MediaType.APPLICATION_JSON)
             .content("{\"username\":\"\"}"))
             .andExpect(status().isBadRequest())
-            .andExpect(jsonPath("$.message").isArray());
+            .andExpect(jsonPath("$.code").value(400));
   }
 }
