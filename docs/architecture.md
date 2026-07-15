@@ -18,7 +18,7 @@ harness-demo is a Spring Boot 3.2 web application using Java 17.
 
 ## Architecture Principles
 
-1. **Layered architecture**: Controller → Service → Repository
+1. **Layered architecture**: Controller → DTO → Service → Model / Client / Repository
 2. **API-first**: Define REST contracts before implementation
 3. **Testable**: Business logic in services, testable without Spring context
 4. **Documented**: Architecture decisions in `docs/adr/`
@@ -28,10 +28,14 @@ harness-demo is a Spring Boot 3.2 web application using Java 17.
 ```
 src/
   main/java/com/example/harnessdemo/
-    controller/     # REST endpoints
-    service/        # Business logic
-    repository/     # Data access
-    model/          # Domain models / DTOs
+    controller/     # REST controllers (exposes HTTP API)
+    dto/            # Request/response DTOs (network boundary contracts)
+    service/        # Business logic interfaces + implementations
+    repository/     # Data access interfaces + implementations
+    model/          # Domain models with business behavior
+    client/         # External service clients (HTTP/RPC outbound gateways)
     config/         # Spring configuration
   test/java/com/example/harnessdemo/
 ```
+
+Call flow: `Controller → DTO ↔ Service → Model | Repository | Client`

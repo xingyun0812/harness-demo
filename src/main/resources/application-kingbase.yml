@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:kingbase8://localhost:54321/harness_demo
+    driver-class-name: com.kingbase8.Driver
+    username: ${DATASOURCE_USERNAME:system}
+    password: ${DATASOURCE_PASSWORD:system}
+  flyway:
+    enabled: false
