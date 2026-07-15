@@ -202,10 +202,7 @@ chore:     构建/工具维护
 | code-review | `.claude/agents/code-review.md` | 代码审查代理，在 PR 阶段调用 |
 | eval-gate | `.claude/agents/eval-gate.md` | 评估门禁代理，验收前检查 |
 
-**生效时机**：
-
-- **手动**：在 Claude Code 中通过 `/agent` 或工作流引用时触发。
-- **自动**：作为 push gate 的一部分（`.claude/settings.json` → `PreToolUse(Bash(git push *))` + agent hook），每次 `git push` 前自动串行执行 code-review → eval-gate，任一失败阻断 push。
+**生效时机**：在 Claude Code 中通过 `/agent` 或工作流引用时触发。
 
 ### 4.4 Workflow
 
