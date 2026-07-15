@@ -8,7 +8,7 @@ set -euo pipefail
 HOOKS_DIR="$(git rev-parse --git-dir)/hooks"
 PROJECT_DIR="$(git rev-parse --show-toplevel)"
 
-# Pre-commit hook: run checkstyle before each commit
+# Pre-commit hook: run checkstyle and doc-sync check before each commit
 cat > "$HOOKS_DIR/pre-commit" << 'HOOK'
 #!/usr/bin/env bash
 set -euo pipefail
@@ -18,6 +18,12 @@ if ! mvn checkstyle:check -q 2>/dev/null; then
     exit 1
 fi
 echo "Checkstyle passed."
+echo "Running doc-sync check..."
+
+# Compute PROJECT_DIR at runtime so the hook works from any CWD
+PROJECT_DIR="$(git rev-parse --show-toplevel)"
+bash "$PROJECT_DIR/scripts/check-doc-sync.sh" || true
+echo "Doc-sync check complete."
 HOOK
 chmod +x "$HOOKS_DIR/pre-commit"
 

@@ -28,9 +28,6 @@ mvn verify
 
 # Lint (checkstyle)
 mvn checkstyle:check
-
-# Security scan (OWASP dependency check)
-mvn org.owasp:dependency-check-maven:check
 ```
 
 ## Code Standards
@@ -40,7 +37,7 @@ mvn org.owasp:dependency-check-maven:check
 - **Build**: Maven
 - **Style**: Checkstyle (Google style)
 - **Coverage Gate**: 60% line coverage (JaCoCo)
-- **Architecture Decisions**: `docs/adr/` — mandatory for non-trivial choices
+- **Architecture Decisions**: `docs/architecture/adr/` — mandatory for non-trivial choices
 - **Process**: Issue → feature branch → PR — No direct pushes to `main`
 
 ## Interaction Rules
@@ -62,22 +59,27 @@ mvn org.owasp:dependency-check-maven:check
 ### Document Sync
 
 修改代码后必须同步相关文档，漂移视为技术债。
+映射规则定义在 `.doc-sync.yml`，是该检查的唯一事实来源。
+`scripts/check-doc-sync.sh` 在 pre-commit 时读取该配置并输出警告。
 
-**每次改动必更新：**
+**每次改动必更新（`.doc-sync.yml` 中 `always` 规则）：**
 - `progress.md` — 当前进度、下一步
 - `docs/PROJECT_STATUS.md` — 完成状态总览
 - `session-handoff.md` — 会话结束时记录上下文
 
-**视情况更新：**
-- `docs/architecture.md` — 架构/分层变更时
-- `docs/harness-standards.md` — 工程规范变更时
-- `docs/roadmap.md` — 功能达成时
+**视情况更新（`.doc-sync.yml` 中 `conditional` 规则）：**
+- `docs/architecture/architecture.md` — 架构/分层变更时
+- `docs/standards/harness-standards.md` — 工程规范变更时
+- `docs/roadmap/roadmap.md` — 功能达成时
 - `feature_list.json` — 功能完成时
 - `memory/` — 需要持久化的上下文
-- `docs/adr/` — 非平凡架构决策
+- `docs/architecture/adr/` — 非平凡架构决策
 - `README.md` — 功能或使用方式变更时
 - `.github/ISSUE_TEMPLATE/` `.github/PULL_REQUEST_TEMPLATE.md` — 流程变更时
 - `CHANGELOG.md` — 版本发布时
+
+> 注意：`.doc-sync.yml` 控制 pre-commit hook 的自动化检查；此列表是补充性参考。
+> 两者不一致时以 `.doc-sync.yml` 为准。
 
 ## Config & Deploy
 
@@ -89,9 +91,9 @@ mvn org.owasp:dependency-check-maven:check
 
 ## Key Architecture Files
 
-- `docs/architecture.md` — system overview
-- `docs/roadmap.md` — future plans & gaps
-- `docs/adr/` — architecture decision records
+- `docs/architecture/architecture.md` — system overview
+- `docs/roadmap/roadmap.md` — future plans & gaps
+- `docs/architecture/adr/` — architecture decision records
 - `docs/PROJECT_STATUS.md` — current completion status
 
 ## Environment

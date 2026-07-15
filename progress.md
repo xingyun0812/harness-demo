@@ -1,6 +1,6 @@
 # Current Active Feature
 
-None — M1 (harness setup) and health endpoint complete.
+None — M1 (harness setup) and health endpoint complete. Doc-sync pre-commit hook added.
 
 ## Milestones
 
@@ -12,3 +12,8 @@ None — M1 (harness setup) and health endpoint complete.
 ## Next Action
 
 Connect remote repository, verify CI pipeline.
+
+## Recently Completed
+
+- Pre-commit doc-sync check (`scripts/check-doc-sync.sh`) — warns when source changes lack matching doc updates
+- Doc-sync rules extracted to `.doc-sync.yml` — scripts reads config instead of hardcoded rules
