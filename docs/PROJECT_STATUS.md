@@ -21,6 +21,9 @@ Initial scaffold complete — git repo initialized, health endpoint deployed.
 - [x] CI workflow (GitHub Actions)
 - [x] Memory system
 
+- [x] Pre-commit doc-sync check（`scripts/check-doc-sync.sh`，规则配置驱动）
+- [x] `.doc-sync.yml` 配置文件（推广模板，替代硬编码规则）
+
 ## Next Actions
 
 1. Connect remote repository

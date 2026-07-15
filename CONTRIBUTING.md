@@ -14,7 +14,7 @@
 
 - **No direct pushes to `main` or `master`** — always use feature branches + PRs
 - All PRs must pass CI before merging
-- Architecture decisions must be documented in `docs/adr/`
+- Architecture decisions must be documented in `docs/architecture/adr/`
 - Follow the existing code style (Checkstyle Google style)
 
 ## Development Setup

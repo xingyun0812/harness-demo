@@ -1,0 +1,48 @@
+# .doc-sync.yml — Doc-sync mapping rules
+#
+# This file is the single source of truth for automated doc-sync checking.
+# - scripts/check-doc-sync.sh reads this file in the pre-commit hook
+# - CLAUDE.md Document Sync section references this file
+#
+# Schema:
+#   always:      [list of doc paths] — required for ANY source change
+#   conditional: [list of rules]
+#     - source:  <glob> or [list of globs] — changed source files to match
+#       docs:    [list of doc paths] — required docs when source matches
+#
+# Glob patterns are relative to repo root (no leading "./").
+# Use ** for recursive matching, * for single-segment wildcard.
+
+always:
+  - progress.md
+  - docs/PROJECT_STATUS.md
+  - session-handoff.md
+
+conditional:
+  # Build/tooling change
+  - source: "pom.xml"
+    docs:
+      - docs/standards/harness-standards.md
+      - CLAUDE.md
+
+  # CI workflow change
+  - source: ".github/workflows/**"
+    docs:
+      - docs/standards/harness-standards.md
+
+  # Process/contribution template change
+  - source:
+      - ".github/ISSUE_TEMPLATE/**"
+      - ".github/PULL_REQUEST_TEMPLATE.md"
+    docs:
+      - CONTRIBUTING.md
+
+  # API surface change (REST controllers)
+  - source: "**/controller/*.java"
+    docs:
+      - README.md
+
+  # Claude Code tooling config change
+  - source: ".claude/**"
+    docs:
+      - docs/standards/harness-standards.md

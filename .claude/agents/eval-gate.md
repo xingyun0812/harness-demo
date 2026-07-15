@@ -6,7 +6,7 @@
 
 1. 运行 `mvn verify` 确认编译、测试、覆盖率均通过
 2. 运行 `mvn checkstyle:check` 确认代码风格合规
-3. 检查 `docs/adr/` — 如果涉及架构变更，必须存在对应 ADR
+3. 检查 `docs/architecture/adr/` — 如果涉及架构变更，必须存在对应 ADR
 4. 输出 PASS / FAIL 判决
 
 ## Context
