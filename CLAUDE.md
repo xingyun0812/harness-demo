@@ -59,6 +59,26 @@ mvn org.owasp:dependency-check-maven:check
 - 发现无关的死代码，提一句就行，不要删
 - 你的改动造成的 unused import/变量必须清理，但不要清理本来就存在的
 
+### Document Sync
+
+修改代码后必须同步相关文档，漂移视为技术债。
+
+**每次改动必更新：**
+- `progress.md` — 当前进度、下一步
+- `docs/PROJECT_STATUS.md` — 完成状态总览
+- `session-handoff.md` — 会话结束时记录上下文
+
+**视情况更新：**
+- `docs/architecture.md` — 架构/分层变更时
+- `docs/harness-standards.md` — 工程规范变更时
+- `docs/roadmap.md` — 功能达成时
+- `feature_list.json` — 功能完成时
+- `memory/` — 需要持久化的上下文
+- `docs/adr/` — 非平凡架构决策
+- `README.md` — 功能或使用方式变更时
+- `.github/ISSUE_TEMPLATE/` `.github/PULL_REQUEST_TEMPLATE.md` — 流程变更时
+- `CHANGELOG.md` — 版本发布时
+
 ## Config & Deploy
 
 | Purpose | Path |
