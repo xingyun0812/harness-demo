@@ -3,6 +3,12 @@ package com.example.harnessdemo.dto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
+/**
+ * 通用 API 返回结果包装.
+ *
+ * @param <T> 业务数据类型
+ * @author xingyun0812
+ */
 @Data
 @Schema(description = "通用接口返回结构")
 public class ApiResult<T> {

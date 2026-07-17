@@ -1,6 +1,21 @@
 # Changelog
 
-## [0.0.1-SNAPSHOT] - Unreleased
+## [0.1.0] - 2026-07-15
+
+### Added
+
+- User CRUD REST API (`POST/GET /api/users`, `GET /api/users/{id}`)
+- MyBatis-Plus ORM integration with Flyway migrations
+- Multi-database support (H2 dev, MySQL, Kingbase8 profiles)
+- OpenAPI / Swagger UI documentation (springdoc-openapi)
+- Generic `ApiResult<T>` response wrapper
+- Global exception handler with validation error formatting
+- MyBatis-Plus integration test (`@MybatisTest`)
+- End-to-end integration test (`@SpringBootTest` + `TestRestTemplate`)
+- Logback configuration (logback-spring.xml)
+- Architecture Decision Records (ADR-001 ~ ADR-004)
+
+## [0.0.1-SNAPSHOT] - 2026-07-08
 
 ### Added
 

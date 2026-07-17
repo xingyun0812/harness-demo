@@ -21,6 +21,9 @@ management:
     web:
       exposure:
         include: health,info
+  tracing:
+    sampling:
+      probability: ${TRACING_SAMPLING:1.0}
 
 mybatis-plus:
   configuration:
@@ -28,3 +31,14 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
+
+logging:
+  level:
+    com.example.harnessdemo: ${LOG_LEVEL_APP:DEBUG}
+    com.example.harnessdemo.repository: ${LOG_LEVEL_REPO:${LOG_LEVEL_APP:DEBUG}}
+    org.springframework: ${LOG_LEVEL_SPRING:WARN}
+    com.baomidou.mybatisplus: ${LOG_LEVEL_MYBATIS:WARN}
+    org.flywaydb: ${LOG_LEVEL_FLYWAY:WARN}
+  pattern:
+    # dev 环境的控制台格式，走 Spring Boot 默认
+    console: "${CONSOLE_LOG_PATTERN:-%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd HH:mm:ss.SSS}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"

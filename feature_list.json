@@ -13,6 +13,13 @@
       "status": "completed",
       "verification": "mvn verify passes (JaCoCo >60%), curl /api/health returns 200 OK",
       "completed_at": "2026-07-14"
+    },
+    {
+      "id": "user-crud",
+      "name": "User CRUD REST API",
+      "status": "completed",
+      "verification": "mvn verify passes, POST/GET /api/users returns correct data, integration test passes",
+      "completed_at": "2026-07-15"
     }
   ]
 }

@@ -35,8 +35,9 @@ mvn clean verify            # 连带执行（validate → check）
 
 **规则**：
 
-- BUNDLE 级别 LINE COVEREDRATIO ≥ 60%
+- BUNDLE 级别 LINE COVEREDRATIO ≥ 80%（2026-07-15 从 60% 提升至 80%）
 - `com/example/harnessdemo/HarnessDemoApplication.class` 排除（启动类无业务逻辑，不参与统计）
+- `com/example/harnessdemo/config/TraceIdFilter.class` 排除（工具类 Filter，无业务逻辑）
 
 **如何触发**：
 
@@ -224,7 +225,38 @@ chore:     构建/工具维护
 
 ---
 
-## 5. 文档治理
+## 6. 安全规范
+
+### 6.1 安全基线
+
+| 要求 | 标准 | 例外 |
+|------|------|------|
+| 依赖漏洞扫描 | OWASP Dependency Check (CVSS ≥ 7 警告，不阻断) | Maven 本地开发可跳过 |
+| SQL 注入防护 | 必须使用参数化查询或 ORM（MyBatis-Plus 默认满足） | 无 |
+| 敏感信息泄露 | 日志中不得输出密码/Token/身份证/手机号等 PII | 开发环境 Debug 需手动确认 |
+| API 输入校验 | `@Valid` / `@NotBlank` 等 Bean Validation | 无 |
+| 统一异常处理 | `@RestControllerAdvice` 全局兜底，不泄漏内部堆栈 | 500 级错误可记录堆栈但不返回客户端 |
+| 配置文件 | 密码/密钥等敏感配置通过环境变量注入，不硬编码 | 默认值必须安全（如空密码） |
+| HTTP 安全头 | 生产环境需配置 `X-Content-Type-Options`、`X-Frame-Options` 等 | 本地开发不强制 |
+
+### 6.2 CI 安全门禁
+
+CI 流水线中的安全步骤（`ci.yml`）：
+
+- OWASP Dependency Check（CVSS ≥ 7 告警，`continue-on-error: true`）
+- Checkstyle 阻断（防止不规范代码合入）
+- JaCoCo 覆盖率门禁（80%，确保新增代码有测试覆盖）
+
+### 6.3 生产环境安全 Checklist
+
+- [ ] Spring Security 已配置（认证 + 鉴权）
+- [ ] Actuator 端点已限制暴露（仅 health, info）
+- [ ] 数据库密码通过密钥管理服务注入，非环境变量明文
+- [ ] HTTPS 已强制开启
+- [ ] 日志无敏感信息输出
+- [ ] Rate limiting 已配置
+
+---
 
 | 文档 | 位置 | 更新频率 | 过期后果 |
 |------|------|----------|----------|

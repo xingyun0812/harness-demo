@@ -7,6 +7,11 @@ import com.example.harnessdemo.repository.UserRepository;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
+/**
+ * 用户业务服务.
+ *
+ * @author xingyun0812
+ */
 @Service
 public class UserService {
 

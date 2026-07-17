@@ -24,6 +24,9 @@ Thumbs.db
 # Claude
 .claude/settings.local.json
 
+# Obsidian
+.obsidian/
+
 # Maven
 pom.xml.tag
 pom.xml.releaseBackup

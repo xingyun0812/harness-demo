@@ -13,24 +13,39 @@ mvn spring-boot:run
 
 # Check health
 curl http://localhost:8080/api/health
+
+# Docker
+docker compose up --build
 ```
 
 ## Requirements
 
 - JDK 17+
-- Maven (wrapper not included)
+- Maven 3.9+ (or use `./mvnw`)
+- Docker & Docker Compose (optional, for containerized run)
 
 ## Project Structure
 
 ```
 src/
   main/java/com/example/harnessdemo/
-    controller/     # REST controllers (health endpoint)
-    service/        # Business logic (planned)
-    repository/     # Data access (planned)
-    model/          # Domain models (planned)
-    config/         # Configuration (planned)
+    controller/     # REST controllers
+    service/        # Business logic
+    repository/     # Data access (MyBatis-Plus)
+    model/          # Domain models
+    dto/            # Request/Response DTOs
+    config/         # Configuration classes
   test/             # Unit & integration tests
 ```
+
+## Build Commands
+
+| Command | Purpose |
+|---------|--------|
+| `mvn clean verify` | Build + test + coverage gate + lint |
+| `mvn spring-boot:run` | Start dev server |
+| `mvn checkstyle:check` | Google style check |
+| `mvn pmd:check` | Alibaba p3c coding rules check |
+| `mvn org.owasp:dependency-check-maven:check` | Dependency security scan |
 
 See `CLAUDE.md` for full build/test/lint commands.
