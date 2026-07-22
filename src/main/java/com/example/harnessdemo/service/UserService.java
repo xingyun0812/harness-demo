@@ -2,6 +2,7 @@ package com.example.harnessdemo.service;
 
 import com.example.harnessdemo.dto.CreateUserRequest;
 import com.example.harnessdemo.dto.UserResponse;
+import com.example.harnessdemo.exception.ResourceNotFoundException;
 import com.example.harnessdemo.model.User;
 import com.example.harnessdemo.repository.UserRepository;
 import java.util.List;
@@ -41,7 +42,7 @@ public class UserService {
   public UserResponse getById(Long id) {
     User user = userRepository.selectById(id);
     if (user == null) {
-      throw new RuntimeException("User not found: " + id);
+      throw new ResourceNotFoundException("User", id);
     }
     return UserResponse.from(user);
   }

@@ -12,7 +12,7 @@ harness-demo is a Spring Boot 3.2 web application using Java 17.
 | Framework | Spring Boot 3.2.x |
 | Build | Maven |
 | Testing | JUnit 5 + AssertJ |
-| Coverage | JaCoCo (60% threshold) |
+| Coverage | JaCoCo (80% threshold) |
 | Lint | Checkstyle (Google style) |
 | Security | OWASP Dependency Check |
 
@@ -33,9 +33,11 @@ src/
     service/        # Business logic interfaces + implementations
     repository/     # Data access interfaces + implementations
     model/          # Domain models with business behavior
+    exception/      # Domain exceptions (typed error handling, mapped to HTTP status)
     client/         # External service clients (HTTP/RPC outbound gateways)
     config/         # Spring configuration
   test/java/com/example/harnessdemo/
 ```
 
 Call flow: `Controller → DTO ↔ Service → Model | Repository | Client`
+Error flow: `Service → exception → GlobalExceptionHandler → ApiResult`

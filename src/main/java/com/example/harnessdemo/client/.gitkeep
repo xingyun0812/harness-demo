@@ -1,0 +1,8 @@
+# Placeholder to keep the `client/` package in git.
+#
+# Purpose: External service clients (HTTP/RPC outbound gateways).
+#          e.g., RestTemplate/WebClient wrappers for downstream services,
+#          SDK clients for internal systems.
+#
+# This package is reserved by the documented architecture (see docs/architecture.md).
+# Add concrete client classes here when outbound integrations are introduced.

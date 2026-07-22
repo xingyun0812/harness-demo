@@ -14,7 +14,7 @@ Scaffold complete with health endpoint and full User CRUD API. Remote connected,
 - [x] Git repository initialized + .gitignore
 - [x] Remote repository connected (github.com:xingyun0812/harness-demo)
 - [x] CI pipeline verified green (GitHub Actions)
-- [x] `mvn verify` passing (coverage > 60%)
+- [x] `mvn verify` passing (coverage ≥ 80%)
 - [x] Branch renamed to `main`
 - [x] Git hooks installed (pre-commit: Checkstyle; pre-push: block main)
 - [x] CLAUDE.md with project instructions
@@ -30,6 +30,5 @@ Scaffold complete with health endpoint and full User CRUD API. Remote connected,
 
 ## Next Actions
 
-- Raise JaCoCo threshold to 80% for production projects
 - Add Spring Security baseline if required
 - Containerize with Docker for standardized deployment

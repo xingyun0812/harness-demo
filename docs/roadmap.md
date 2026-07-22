@@ -14,7 +14,6 @@ Harness setup complete, health endpoint deployed, User CRUD API implemented. Rem
 ## Future Enhancements (consider before promoting as template)
 
 - [ ] Spring Security / authentication baseline
-- [ ] JaCoCo threshold raised to 80%
 - [ ] Docker / docker-compose for standardized deployment
 - [ ] Rate limiting and request validation hardening
 - [ ] Metrics and structured logging refinement
@@ -27,4 +26,3 @@ Harness setup complete, health endpoint deployed, User CRUD API implemented. Rem
 ## Known Limitations
 
 - No authentication/authorization (acceptable for demo, add per project baseline)
-- JaCoCo threshold at 60% (raise to 80% for production projects)

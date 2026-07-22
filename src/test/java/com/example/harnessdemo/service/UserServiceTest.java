@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import com.example.harnessdemo.dto.CreateUserRequest;
 import com.example.harnessdemo.dto.UserResponse;
+import com.example.harnessdemo.exception.ResourceNotFoundException;
 import com.example.harnessdemo.model.User;
 import com.example.harnessdemo.repository.UserRepository;
 import java.time.LocalDateTime;
@@ -87,7 +88,7 @@ class UserServiceTest {
     when(userRepository.selectById(99L)).thenReturn(null);
 
     assertThatThrownBy(() -> userService.getById(99L))
-        .isInstanceOf(RuntimeException.class)
+        .isInstanceOf(ResourceNotFoundException.class)
         .hasMessageContaining("User not found");
   }
 }

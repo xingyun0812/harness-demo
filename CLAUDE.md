@@ -39,7 +39,7 @@ mvn org.owasp:dependency-check-maven:check
 - **Framework**: Spring Boot 3.2.x
 - **Build**: Maven
 - **Style**: Checkstyle (Google style)
-- **Coverage Gate**: 60% line coverage (JaCoCo)
+- **Coverage Gate**: 80% line coverage (JaCoCo)
 - **Architecture Decisions**: `docs/adr/` — mandatory for non-trivial choices
 - **Process**: Issue → feature branch → PR — No direct pushes to `main`
 

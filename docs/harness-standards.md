@@ -70,8 +70,6 @@ mvn org.owasp:dependency-check-maven:check
 
 ### 1.5 架构分层
 
-### 1.5 架构分层
-
 ```
 src/main/java/com/example/harnessdemo/
   controller/     # REST 控制器（对内暴露的 HTTP API）
@@ -79,6 +77,7 @@ src/main/java/com/example/harnessdemo/
   service/        # 业务逻辑接口 + 实现
   repository/     # 数据访问接口 + 实现
   model/          # 领域模型（含业务行为）
+  exception/      # 领域异常（类型化错误处理，映射 HTTP 状态码）
   client/         # 外部服务客户端（HTTP/RPC 出站 gateway）
   config/         # 配置类
 ```
@@ -93,7 +92,7 @@ src/main/java/com/example/harnessdemo/
 
 - 默认分支：`main`
 - 工作流：Issue → feature branch → PR → review → merge
-- 禁止直推 `main`（双向防护：Git hook + CI 配置）
+- 禁止直推 `main`（三层防护：Claude PreToolUse hook + Git pre-push hook + GitHub branch protection，见 2.3 / 4.5 / 2.6）
 
 ### 2.2 Pre-commit Hook — Checkstyle
 
@@ -110,13 +109,21 @@ fi
 
 **效果**：代码风格不合格 → commit 被中断。
 
-### 2.3 Pre-push Hook — 保护 main
+### 2.3 Pre-push Hook — 保护 main（Git 侧，权威）
 
-**位置**：`.git/hooks/pre-push`（由 `scripts/setup-hooks.sh` 安装）
+**位置**：`.git/hooks/pre-push`（由 `scripts/setup-hooks.sh` 安装，需手动执行一次）
 
-**生效时机**：每次 `git push` 前
+**生效时机**：每次 `git push` 前（由 git 本身触发，与是否使用 Claude Code 无关）
 
 **逻辑**：目标 ref 为 `refs/heads/main` 或 `refs/heads/master` → 拒绝并提示用 PR。
+
+**安装**：
+
+```bash
+bash scripts/setup-hooks.sh    # clone 仓库后必须执行一次
+```
+
+⚠️ 此 hook 不会被 git 跟踪，每个新 clone 都需要重新安装。GitHub branch protection 是最终兑底（见 2.6）。
 
 ### 2.4 Commit 规范
 
@@ -138,6 +145,18 @@ chore:     构建/工具维护
 | Bug report | `.github/ISSUE_TEMPLATE/bug.md` |
 | Feature request | `.github/ISSUE_TEMPLATE/feature.md` |
 | Pull Request | `.github/PULL_REQUEST_TEMPLATE.md` |
+
+### 2.6 GitHub Branch Protection（最终兑底）
+
+**位置**：GitHub 仓库 Settings → Branches → Branch protection rules
+
+**必配项**：
+
+- Protect `main`：require pull request before merge
+- Require status checks to pass：CI（`ci.yml`）必须通过
+- Require approvals：至少 1 个 review
+
+**为何必配**：本地 hook（`.git/hooks/pre-push`、Claude PreToolUse）都可被绕过（`--no-verify`、非 Claude 终端 push），只有仓库侧的 branch protection 是不可绕过的。clone 仓库后第一件事：在 GitHub 仓库设置里开启。
 
 ---
 
@@ -174,7 +193,7 @@ chore:     构建/工具维护
 
 - 构建/测试/检查/安全扫描命令
 - 代码标准（Java 17, Spring Boot 3.2, Checkstyle Google）
-- 覆盖率门禁值（60%）
+- 覆盖率门禁值（80%）
 - 架构决策记录要求（`docs/adr/`）
 - Process（Issue → branch → PR）
 - 环境变量表
@@ -211,11 +230,20 @@ chore:     构建/工具维护
 |----------|------|------|
 | ci-monitor | `.claude/workflows/ci-monitor.md` | CI 流水线状态监控 |
 
-### 4.5 Hooks（Claude 侧）
+### 4.5 Hooks（Claude 侧 PreToolUse）
 
-**位置**：`.claude/hooks/pre-push`
+**位置**：`.claude/settings.json` → `hooks.PreToolUse`（matcher: `Bash`），脚本在 `scripts/claude-pre-push-guard.sh`
 
-**生效机制**：Claude Code 执行 git push 前触发。与 `.git/hooks/pre-push` 不同，这是 Claude 客户端侧的额外防护。
+**生效机制**：Claude Code 在调用 Bash 工具前触发，检查命令是否为 `git push ... main/master`，命中则拒绝（exit 2）。与 `.git/hooks/pre-push` 互补：Claude 侧在命令发出前拦截，git 侧在 push 执行时拦截。
+
+**覆盖场景**：
+
+- `git push origin main` / `git push origin master` → 拒绝
+- `git push origin main:main` / `git push origin HEAD:main` → 拒绝
+- `git push`（无 refspec，当前分支为 main）→ 拒绝（查当前分支）
+- `git push origin feature/main` / `git push origin feat/xxx` → 放行
+
+**局限**：仅对 Claude Code 发起的 push 生效；终端直接 `git push` 不经过此 hook，靠 `.git/hooks/pre-push` 兑底（见 2.3）。
 
 ### 4.6 Memory 系统
 
@@ -287,10 +315,11 @@ bash scripts/setup-hooks.sh            # 安装 git hooks
 
 ### 规范化开发流程
 
+0. 首次 clone：`bash scripts/setup-hooks.sh` 安装 git hooks；在 GitHub 仓库设置开启 `main` branch protection（见 2.6）
 1. 从 `main` 创建 feature branch
 2. 开发，频繁 `git commit`（pre-commit 自动检查风格）
 3. `mvn verify` 通过
 4. 同步文档（progress / status / feature_list）
-5. 提交 PR（pre-push 拦截直推 main）
+5. 提交 PR（Claude PreToolUse + git pre-push 拦截直推 main）
 6. CI 在 GitHub 上二次验证
 7. Review → merge
