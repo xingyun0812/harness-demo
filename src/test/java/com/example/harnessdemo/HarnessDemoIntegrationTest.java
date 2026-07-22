@@ -8,10 +8,21 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.annotation.DirtiesContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * 端到端集成测试 — 通过 HTTP 调用完整 Spring 栈.
+ *
+ * <p>用 {@code @DirtiesContext(AFTER_CLASS)} 是因为这些测试通过 HTTP 提交数据到共享的 H2
+ * 内存库（无法用 {@code @Transactional} 回滚——HTTP 请求在 servlet 容器的独立线程/事务中执行）。
+ * 不加的话，已提交的数据会泄漏到共享同一 Spring 上下文的后续测试类（如
+ * {@code UserRepositoryTest.selectAll_returnsAllUsers} 会看到多余的记录而失败）。
+ * 加上后，本类结束后 Spring 上下文会被销毁，下一个测试类拿到全新 H2。
+ */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 class HarnessDemoIntegrationTest {
 
   @Autowired
