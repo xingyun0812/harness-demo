@@ -26,20 +26,9 @@ jobs:
       - name: Build and test with coverage
         run: mvn verify
 
-      - name: OWASP dependency check
-        run: mvn org.owasp:dependency-check-maven:check
-        continue-on-error: true
-
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: coverage-report
           path: target/site/jacoco/
-
-      - name: Upload OWASP report
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: owasp-report
-          path: target/dependency-check-report.html

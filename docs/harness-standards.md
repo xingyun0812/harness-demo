@@ -56,17 +56,25 @@ mvn verify -Dcoverage.threshold=0
 
 **位置**：`pom.xml`（OWASP dependency-check-maven 插件配置）
 
-**生效时机**：仅单独执行（不绑到 `mvn verify`，保持本地构建快速）。CI 在 verify 之后单独跑一步。
+**生效时机**：仅本地按需执行，**不在 CI 中运行**。
 
-**规则**：CVSS ≥ 7 报出，但**不阻断构建**（`pom.xml` 设 `failBuildOnCVSS=11` 实际不阻断；CI 步骤 `continue-on-error: true` 双保险）。
+**为什么不在 CI**：每次运行需下载 NVD 漏洞数据库（数百 MB），单次 5–10 分钟，严重拖慢流水线。安全扫描频率不需要逐次 commit，按周/按发布周期手动跑即可。
 
-**设计考量**：安全知悉优先于阻塞交付；CI 中可查看报告但不会打断流水线；本地开发不被 OWASP 网络/数据库拖慢。
+**规则**：CVSS ≥ 7 报出，但**不阻断构建**（`pom.xml` 设 `failBuildOnCVSS=11` 实际不阻断）。
+
+**设计考量**：安全知悉优先于阻塞交付；本地按需执行，报告人工 review，不打断开发流水线。
 
 **如何触发**：
 
 ```bash
+# 本地按需执行（首次会下载 NVD 库，耗时较长）
 mvn org.owasp:dependency-check-maven:check
+
+# 报告位置
+open target/dependency-check-report.html
 ```
+
+**建议节奏**：每周或每个 release 前由开发者本地跑一次，review 报告，跟踪 CVSS ≥ 7 的依赖升级。
 
 ### 1.5 架构分层
 
@@ -199,8 +207,9 @@ chore:     构建/工具维护
 |------|------|------|
 | 1. Checkstyle | `mvn checkstyle:check -q` | 风格检查 |
 | 2. Build & Coverage | `mvn verify` | 编译 + 测试 + 覆盖率门禁 |
-| 3. OWASP | `mvn org.owasp:...:check`（continue-on-error） | 依赖安全扫描 |
-| 4. Upload artifact | coverage report → GitHub | 可下载 HTML 报告 |
+| 3. Upload artifact | coverage report → GitHub | 可下载 HTML 报告 |
+
+**不在 CI 中**：OWASP dependency check — 每次需下载 NVD 漏洞库（数百 MB，5–10 分钟），改为本地按需执行（见 §1.4）。
 
 **当前状态**：工作流文件已就绪。连接 remote 仓库后自动生效。
 
@@ -294,11 +303,12 @@ chore:     构建/工具维护
 
 ### 6.2 CI 安全门禁
 
-CI 流水线中的安全步骤（`ci.yml`）：
+CI 流水线（`ci.yml`）中的安全相关步骤：
 
-- OWASP Dependency Check（CVSS ≥ 7 告警，`continue-on-error: true`）
 - Checkstyle 阻断（防止不规范代码合入）
 - JaCoCo 覆盖率门禁（80%，确保新增代码有测试覆盖）
+
+**不在 CI**：OWASP Dependency Check — 改为本地按需执行（见 §1.4），避免每次 CI 下载 NVD 漏洞库拖慢流水线。建议每周或 release 前手动跑一次。
 
 ### 6.3 生产环境安全 Checklist
 
