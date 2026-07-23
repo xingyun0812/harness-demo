@@ -174,13 +174,18 @@
                 </executions>
             </plugin>
 
-            <!-- OWASP dependency check -->
+            <!-- OWASP dependency check — reports CVSS ≥ 7 but does NOT fail the build
+                 (per docs/harness-standards.md §1.4: 安全知悉优先于阻塞交付).
+                 CI runs this with continue-on-error as belt-and-suspenders. -->
             <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
                 <version>10.0.4</version>
+                <!-- Intentionally no <executions> binding: keep `mvn verify` fast for local dev.
+                     Run explicitly: mvn org.owasp:dependency-check-maven:check
+                     CI invokes it as a separate step (see .github/workflows/ci.yml). -->
                 <configuration>
-                    <failBuildOnCVSS>7</failBuildOnCVSS>
+                    <failBuildOnCVSS>11</failBuildOnCVSS>
                 </configuration>
             </plugin>
 

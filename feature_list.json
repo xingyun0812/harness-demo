@@ -11,7 +11,7 @@
       "id": "health-endpoint",
       "name": "Health Check Endpoint",
       "status": "completed",
-      "verification": "mvn verify passes (JaCoCo ≥80%), curl /api/health returns 200 OK",
+      "verification": "mvn verify passes (JaCoCo ≥80%), curl /api/health returns 200 OK; HealthService probes DataSource via SELECT 1",
       "completed_at": "2026-07-14"
     },
     {
@@ -20,6 +20,20 @@
       "status": "completed",
       "verification": "mvn verify passes, POST/GET /api/users returns correct data, integration test passes",
       "completed_at": "2026-07-15"
+    },
+    {
+      "id": "p0-review-fixes",
+      "name": "P0 Review Fixes (coverage/ADR/client/exception/hooks)",
+      "status": "completed",
+      "verification": "PR #5 merged (commit 61cc885), CI run 29932099526 green",
+      "completed_at": "2026-07-22"
+    },
+    {
+      "id": "p1-review-fixes",
+      "name": "P1 Review Fixes (OWASP/transactional/health/docker/handoff)",
+      "status": "completed",
+      "verification": "PR #6 — OWASP non-blocking in CI, @Transactional on UserService, HealthService real DB probe, docker healthcheck wget, session-handoff updated",
+      "completed_at": "2026-07-23"
     }
   ]
 }

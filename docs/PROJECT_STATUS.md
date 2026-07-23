@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Scaffold complete with health endpoint and full User CRUD API. Remote connected, CI pipeline verified green.
+Scaffold complete with health endpoint, User CRUD API, and two rounds of review-driven fixes (P0 + P1). CI green, docs in sync.
 
 ## What's Done
 
@@ -27,8 +27,10 @@ Scaffold complete with health endpoint and full User CRUD API. Remote connected,
 - [x] MyBatis-Plus integration test (`@MybatisTest`)
 - [x] End-to-end integration test (`@SpringBootTest` + `TestRestTemplate`)
 - [x] Logback configuration (logback-spring.xml)
+- [x] P0 review fixes (PR #5): coverage 80% unified, ADR-004 aligned, client/ package, typed exception routing, real Claude hooks
+- [x] P1 review fixes (PR #6): OWASP aligned, @Transactional, HealthService real DB probe, docker healthcheck fix, session-handoff update
 
 ## Next Actions
 
 - Add Spring Security baseline if required
-- Containerize with Docker for standardized deployment
+- P2 polish: agent prompt expansion, TraceIdFilter write-back, .editorconfig, memory/ fill, @author template

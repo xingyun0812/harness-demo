@@ -54,19 +54,27 @@ mvn verify -Dcoverage.threshold=0
 
 ### 1.4 依赖安全 — OWASP Dependency Check
 
-**位置**：`pom.xml` line 91–99
+**位置**：`pom.xml`（OWASP dependency-check-maven 插件配置）
 
-**生效时机**：`mvn verify` 或单独执行
+**生效时机**：仅本地按需执行，**不在 CI 中运行**。
 
-**规则**：CVSS ≥ 7 报出，但**不阻断构建**（`continue-on-error: true` in CI）。
+**为什么不在 CI**：每次运行需下载 NVD 漏洞数据库（数百 MB），单次 5–10 分钟，严重拖慢流水线。安全扫描频率不需要逐次 commit，按周/按发布周期手动跑即可。
 
-**设计考量**：安全知悉优先于阻塞交付；CI 中可查看报告但不会打断流水线。
+**规则**：CVSS ≥ 7 报出，但**不阻断构建**（`pom.xml` 设 `failBuildOnCVSS=11` 实际不阻断）。
+
+**设计考量**：安全知悉优先于阻塞交付；本地按需执行，报告人工 review，不打断开发流水线。
 
 **如何触发**：
 
 ```bash
+# 本地按需执行（首次会下载 NVD 库，耗时较长）
 mvn org.owasp:dependency-check-maven:check
+
+# 报告位置
+open target/dependency-check-report.html
 ```
+
+**建议节奏**：每周或每个 release 前由开发者本地跑一次，review 报告，跟踪 CVSS ≥ 7 的依赖升级。
 
 ### 1.5 架构分层
 
@@ -83,6 +91,31 @@ src/main/java/com/example/harnessdemo/
 ```
 
 非平凡架构决策需记录到 `docs/adr/`。
+
+### 1.6 事务管理 — `@Transactional`
+
+**规则**：
+
+| 操作类型 | 注解 | 说明 |
+|----------|------|------|
+| 写（insert/update/delete） | `@Transactional(rollbackFor = Exception.class)` | 显式指定 rollbackFor，按 Alibaba p3c 规范避免默认只回滚 RuntimeException 的陷阱 |
+| 只读（select） | `@Transactional(readOnly = true)` | 走读优化路径，并防止误写 |
+
+**位置**：`service/` 层方法上（不要放在 `controller/` 或 `repository/`）
+
+**生效机制**：Spring AOP 代理，类加载时织入。方法被同类内部调用时不会走代理（self-invocation 陷阱）——跨方法调用须通过 Bean。
+
+**示例**（见 `UserService.java`）：
+
+```java
+@Transactional(rollbackFor = Exception.class)
+public UserResponse create(CreateUserRequest request) { ... }
+
+@Transactional(readOnly = true)
+public List<UserResponse> listAll() { ... }
+```
+
+**为什么强制 `rollbackFor`**：Spring `@Transactional` 默认只回滚 `RuntimeException` 和 `Error`，受检异常（如 `IOException`）不回滚。显式 `rollbackFor = Exception.class` 确保所有异常都触发回滚，避免漏回滚导致脏数据。Alibaba p3c 的 `TransactionMustHaveRollbackRule` 会强制此规则（`mvn pmd:check`）。
 
 ---
 
@@ -174,8 +207,9 @@ chore:     构建/工具维护
 |------|------|------|
 | 1. Checkstyle | `mvn checkstyle:check -q` | 风格检查 |
 | 2. Build & Coverage | `mvn verify` | 编译 + 测试 + 覆盖率门禁 |
-| 3. OWASP | `mvn org.owasp:...:check`（continue-on-error） | 依赖安全扫描 |
-| 4. Upload artifact | coverage report → GitHub | 可下载 HTML 报告 |
+| 3. Upload artifact | coverage report → GitHub | 可下载 HTML 报告 |
+
+**不在 CI 中**：OWASP dependency check — 每次需下载 NVD 漏洞库（数百 MB，5–10 分钟），改为本地按需执行（见 §1.4）。
 
 **当前状态**：工作流文件已就绪。连接 remote 仓库后自动生效。
 
@@ -269,11 +303,12 @@ chore:     构建/工具维护
 
 ### 6.2 CI 安全门禁
 
-CI 流水线中的安全步骤（`ci.yml`）：
+CI 流水线（`ci.yml`）中的安全相关步骤：
 
-- OWASP Dependency Check（CVSS ≥ 7 告警，`continue-on-error: true`）
 - Checkstyle 阻断（防止不规范代码合入）
 - JaCoCo 覆盖率门禁（80%，确保新增代码有测试覆盖）
+
+**不在 CI**：OWASP Dependency Check — 改为本地按需执行（见 §1.4），避免每次 CI 下载 NVD 漏洞库拖慢流水线。建议每周或 release 前手动跑一次。
 
 ### 6.3 生产环境安全 Checklist
 

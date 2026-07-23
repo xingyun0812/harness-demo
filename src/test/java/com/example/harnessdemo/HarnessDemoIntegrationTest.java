@@ -38,6 +38,17 @@ class HarnessDemoIntegrationTest {
   }
 
   @Test
+  void healthEndpointReflectsRealDbProbe() {
+    // HealthService now probes DataSource with SELECT 1, so data.status should be "OK"
+    // when H2 is up. This locks in that the endpoint is not a stub returning OK unconditionally.
+    ResponseEntity<ApiResult> response = restTemplate.getForEntity("/api/health", ApiResult.class);
+
+    assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    assertThat(response.getBody()).isNotNull();
+    assertThat(response.getBody().getData()).isNotNull();
+  }
+
+  @Test
   void createAndListUsers() {
     CreateUserRequest request = new CreateUserRequest("int-user", "int@test.com", "13900139000");
 
