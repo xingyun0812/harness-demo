@@ -1,6 +1,6 @@
 # Current Active Feature
 
-None — M1 (harness setup), M2 (health endpoint), M3 (User CRUD), M4 (P0 review fixes), M5 (P1 review fixes) complete.
+None — M1–M6 complete (harness setup, health, CRUD, P0, P1, P2 review fixes).
 
 ## Milestones
 
@@ -11,9 +11,10 @@ None — M1 (harness setup), M2 (health endpoint), M3 (User CRUD), M4 (P0 review
 | M3: User CRUD API | Done | 2026-07-15 |
 | M4: P0 Review Fixes (PR #5) | Done | 2026-07-22 |
 | M5: P1 Review Fixes (PR #6) | Done | 2026-07-23 |
+| M6: P2 Review Fixes (PR #7) | Done | 2026-07-23 |
 
 ## Next Action
 
-- Merge PR #6 after CI passes
+- Merge PR #7 after CI passes
 - Enable GitHub branch protection on `main` (see `docs/harness-standards.md §2.6`)
-- Consider P2 items: agent prompt expansion, TraceIdFilter write-back, .editorconfig, memory/ fill, @author template
+- All review findings (P0 + P1 + P2) addressed — project ready as template

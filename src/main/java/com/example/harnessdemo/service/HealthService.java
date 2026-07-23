@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
  * <p>设计原则：健康检查端点应反映真实可用性，否则监控告警会失真——DB 挂了仍回 OK 会误导运维。
  * 作为模板，这里示范如何对依赖做探活；新项目接入更多依赖（Redis/MQ/下游 RPC）时在此扩展。
  *
- * @author xingyun0812
+ * @author <your-name>
  */
 @Service
 public class HealthService {

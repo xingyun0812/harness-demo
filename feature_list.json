@@ -34,6 +34,13 @@
       "status": "completed",
       "verification": "PR #6 — OWASP non-blocking in CI, @Transactional on UserService, HealthService real DB probe, docker healthcheck wget, session-handoff updated",
       "completed_at": "2026-07-23"
+    },
+    {
+      "id": "p2-review-fixes",
+      "name": "P2 Review Fixes (agents/traceId/editorconfig/kingbase/memory/author/launch)",
+      "status": "completed",
+      "verification": "PR #7 — agent prompts expanded, TraceIdFilter write-back + 5 tests, .editorconfig, Kingbase Flyway aligned with ADR-003, memory/ filled with real entries, @author templated, launch.json documented",
+      "completed_at": "2026-07-23"
     }
   ]
 }

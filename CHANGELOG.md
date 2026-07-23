@@ -2,9 +2,28 @@
 
 ## [Unreleased] - 2026-07-23
 
+### Changed (P2 review fixes, PR #7)
+
+- `TraceIdFilter` now writes `X-Trace-Id` back to the response header (callers can correlate requests); 5 unit tests added
+- `application-kingbase.yml`: Flyway disabled rationale documented + env var override `KINGBASE_FLYWAY_ENABLED`
+- `docs/adr/ADR-003-flyway.md`: added Kingbase section explaining why Flyway is disabled for Kingbase (community dialect, DBA-managed schema)
+- `docs/harness-standards.md §1.3`: removed stale `TraceIdFilter.class` from coverage excludes (was never in pom.xml)
+- All Java `@author xingyun0812` → `@author <your-name>` (template placeholder)
+- All ADR `Deciders: xingyun0812` → `Deciders: <your-name>`
+- `OpenApiConfig` Contact name → `<your-name>`
+
+### Added (P2)
+
+- `.claude/agents/code-review.md` expanded with 6-section checklist + output format + triggers
+- `.claude/agents/eval-gate.md` expanded with 4-section gate + output format
+- `.editorconfig` aligned with Google style (2-space indent, 100 char line, per-file rules)
+- `memory/` rebuilt: `MEMORY.md` index, `topic_project_root.md`, `topic_tech_stack.md` (fixed frontmatter), `topic_gotchas.md` (7 real gotchas), `topic_workflow.md`
+- `.claude/README.md` explaining `.claude/` directory structure and `launch.json` `type: "claude"` runner
+- `docs/harness-standards.md §4.7`: launch.json documentation
+
 ### Changed (P1 review fixes, PR #6)
 
-- OWASP dependency check no longer blocks build (`failBuildOnCVSS=11` in pom); CI runs it as a separate `continue-on-error: true` step (per `harness-standards.md §1.4` "不阻断")
+- OWASP dependency check removed from CI (too slow: NVD download 5-10 min per run); now local-only per `harness-standards.md §1.4`
 - `HealthService` now probes DataSource (`SELECT 1`) instead of unconditionally returning OK; new `HealthStatus.down()` factory
 - `docker-compose.yml` healthcheck switched from `curl` to `wget --spider` (alpine base image has BusyBox wget, not curl)
 - Roadmap: Docker moved from "Future + Out of Scope" (contradictory) to "Planned Features" (functional, optional)
@@ -12,7 +31,7 @@
 
 ### Added (P1)
 
-- `@Transactional` on `UserService.create` (write) and `@Transactional(readOnly=true)` on `listAll`/`getById`; transaction rule documented in new `harness-standards.md §1.6`
+- `@Transactional(rollbackFor = Exception.class)` on `UserService.create` (write) and `@Transactional(readOnly=true)` on `listAll`/`getById`; transaction rule documented in new `harness-standards.md §1.6`
 - `HealthServiceTest` rewritten with mock DataSource (OK + DOWN paths)
 - `HealthControllerTest` DOWN case
 - `HarnessDemoIntegrationTest.healthEndpointReflectsRealDbProbe`

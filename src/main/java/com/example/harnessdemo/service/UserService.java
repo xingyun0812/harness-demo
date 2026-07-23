@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
  *   <li>只读操作标注 {@code @Transactional(readOnly = true)}，让 JPA/MyBatis 可走读优化路径</li>
  * </ul>
  *
- * @author xingyun0812
+ * @author <your-name>
  */
 @Service
 public class UserService {

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * OpenAPI 文档配置.
  *
- * @author xingyun0812
+ * @author <your-name>
  */
 @Configuration
 public class OpenApiConfig {
@@ -21,6 +21,6 @@ public class OpenApiConfig {
             .title("harness-demo API")
             .description("Claude Code Java harness 演示项目的 REST API")
             .version("0.1.0")
-            .contact(new Contact().name("xingyun0812")));
+            .contact(new Contact().name("<your-name>")));
   }
 }

@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * <p>设计原则：按异常类型路由，而非用错误消息字符串做控制流——后者会误判（任何带 "not found"
  * 的 500 异常都会被错当成 404）。
  *
- * @author xingyun0812
+ * @author <your-name>
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {

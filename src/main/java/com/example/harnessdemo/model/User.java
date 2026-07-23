@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 /**
  * 系统用户实体.
  *
- * @author xingyun0812
+ * @author <your-name>
  */
 @Data
 @NoArgsConstructor

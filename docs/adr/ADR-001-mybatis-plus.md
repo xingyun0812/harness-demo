@@ -2,7 +2,7 @@
 
 - **Status**: accepted
 - **Date**: 2026-07-14
-- **Deciders**: xingyun0812
+- **Deciders**: <your-name>
 
 ## Context
 

@@ -6,7 +6,7 @@ package com.example.harnessdemo.exception;
  * <p>由 {@link com.example.harnessdemo.controller.GlobalExceptionHandler} 捕获后映射为 HTTP 404，
  * 避免用错误消息字符串做控制流（这是该异常引入的根因）。
  *
- * @author xingyun0812
+ * @author <your-name>
  */
 public class ResourceNotFoundException extends RuntimeException {
 

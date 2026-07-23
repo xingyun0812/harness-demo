@@ -29,7 +29,7 @@ mvn clean verify            # 连带执行（validate → check）
 
 ### 1.3 覆盖率门禁 — JaCoCo
 
-**位置**：`pom.xml` line 54–89
+**位置**：`pom.xml`（jacoco-maven-plugin 配置）
 
 **生效时机**：`mvn verify` 阶段，测试执行后
 
@@ -37,7 +37,6 @@ mvn clean verify            # 连带执行（validate → check）
 
 - BUNDLE 级别 LINE COVEREDRATIO ≥ 80%（2026-07-15 从 60% 提升至 80%）
 - `com/example/harnessdemo/HarnessDemoApplication.class` 排除（启动类无业务逻辑，不参与统计）
-- `com/example/harnessdemo/config/TraceIdFilter.class` 排除（工具类 Filter，无业务逻辑）
 
 **如何触发**：
 
@@ -284,6 +283,16 @@ chore:     构建/工具维护
 **位置**：`memory/MEMORY.md` + `memory/*.md`
 
 **生效机制**：Claude Code 启动时，`CLAUDE.md` 中的引用指向 `memory/MEMORY.md`，该文件作为索引列出所有记忆文件。Claude 会在相关上下文中自动检索。
+
+### 4.7 launch.json（开发服务器启动配置）
+
+**位置**：`.claude/launch.json`
+
+**用途**：供 Claude Code 的 `dev-server-start` 能力读取，一键启动开发服务器（`mvn spring-boot:run`）并监听端口，Claude 可在启动后自动验证服务可用性。
+
+⚠️ **`type: "claude"` 是 Claude Code 专有类型**，不是 VS Code 标准的 `java` / `chrome` / `node` 等调试器类型。**不要用 VS Code 的 F5 启动**——会报"无法识别 type: claude"。本地开发直接用终端 `mvn spring-boot:run`。
+
+字段说明详见 `.claude/README.md`。
 
 ---
 

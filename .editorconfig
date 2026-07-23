@@ -1,0 +1,49 @@
+# EditorConfig — https://editorconfig.org
+# Keeps editors in sync with Checkstyle (Google style) and PMD (Alibaba p3c) without
+# waiting for the build to catch style issues. Supported by IntelliJ IDEA, VS Code
+# (via EditorConfig extension), and most other editors.
+
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+# Java — Google Java Style Guide (2-space indent, matches google_checks.xml used by Checkstyle)
+[*.java]
+indent_style = space
+indent_size = 2
+max_line_length = 100
+
+# YAML — 2-space indent, never tabs
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2
+
+# JSON — 2-space indent
+[*.json]
+indent_style = space
+indent_size = 2
+
+# Markdown — preserve trailing whitespace (two trailing spaces = line break)
+[*.md]
+trim_trailing_whitespace = false
+max_line_length = off
+
+# Shell scripts — 2-space indent
+[*.sh]
+indent_style = space
+indent_size = 2
+
+# XML — 2-space indent (pom.xml, logback-spring.xml)
+[*.xml]
+indent_style = space
+indent_size = 2
+
+# Maven wrapper (no style enforcement)
+[mvnw]
+end_of_line = lf
