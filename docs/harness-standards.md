@@ -54,13 +54,13 @@ mvn verify -Dcoverage.threshold=0
 
 ### 1.4 依赖安全 — OWASP Dependency Check
 
-**位置**：`pom.xml` line 91–99
+**位置**：`pom.xml`（OWASP dependency-check-maven 插件配置）
 
-**生效时机**：`mvn verify` 或单独执行
+**生效时机**：仅单独执行（不绑到 `mvn verify`，保持本地构建快速）。CI 在 verify 之后单独跑一步。
 
-**规则**：CVSS ≥ 7 报出，但**不阻断构建**（`continue-on-error: true` in CI）。
+**规则**：CVSS ≥ 7 报出，但**不阻断构建**（`pom.xml` 设 `failBuildOnCVSS=11` 实际不阻断；CI 步骤 `continue-on-error: true` 双保险）。
 
-**设计考量**：安全知悉优先于阻塞交付；CI 中可查看报告但不会打断流水线。
+**设计考量**：安全知悉优先于阻塞交付；CI 中可查看报告但不会打断流水线；本地开发不被 OWASP 网络/数据库拖慢。
 
 **如何触发**：
 
@@ -83,6 +83,31 @@ src/main/java/com/example/harnessdemo/
 ```
 
 非平凡架构决策需记录到 `docs/adr/`。
+
+### 1.6 事务管理 — `@Transactional`
+
+**规则**：
+
+| 操作类型 | 注解 | 说明 |
+|----------|------|------|
+| 写（insert/update/delete） | `@Transactional` | 默认可写，发生异常自动回滚 |
+| 只读（select） | `@Transactional(readOnly = true)` | 走读优化路径，并防止误写 |
+
+**位置**：`service/` 层方法上（不要放在 `controller/` 或 `repository/`）
+
+**生效机制**：Spring AOP 代理，类加载时织入。方法被同类内部调用时不会走代理（self-invocation 陷阱）——跨方法调用须通过 Bean。
+
+**示例**（见 `UserService.java`）：
+
+```java
+@Transactional
+public UserResponse create(CreateUserRequest request) { ... }
+
+@Transactional(readOnly = true)
+public List<UserResponse> listAll() { ... }
+```
+
+**为什么强制**：作为模板，写方法不加 `@Transactional` 会让新成员以为可选；等他们加第二个写操作时就会遗漏，导致脏数据。
 
 ---
 

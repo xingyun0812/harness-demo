@@ -32,4 +32,17 @@ class HealthControllerTest {
             .andExpect(jsonPath("$.data.status").value("OK"))
             .andExpect(jsonPath("$.data.timestamp").value(123L));
   }
+
+  @Test
+  void healthShouldReturnOkEvenWhenDown() throws Exception {
+    // HealthController returns 200 OK with status=DOWN — a degraded-but-reachable service
+    // still answers HTTP; the body carries the real state for monitoring.
+    when(healthService.check()).thenReturn(new HealthStatus("DOWN", 456L));
+
+    mockMvc.perform(get("/api/health"))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.code").value(200))
+            .andExpect(jsonPath("$.data.status").value("DOWN"))
+            .andExpect(jsonPath("$.data.timestamp").value(456L));
+  }
 }
