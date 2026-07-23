@@ -21,7 +21,7 @@
         <java.version>17</java.version>
         <coverage.threshold>0.80</coverage.threshold>
         <checkstyle.version>10.17.0</checkstyle.version>
-        <mybatis-plus.version>3.5.9</mybatis-plus.version>
+        <mybatis-plus.version>3.5.17</mybatis-plus.version>
     </properties>
 
     <dependencies>
