@@ -3,7 +3,7 @@ name: project_root
 description: 项目根上下文 — harness-demo 的定位和用途
 ---
 
-harness-demo 是一个 Spring Boot 3.2 + Java 17 项目，定位为 **Claude Code Java 工程脚手架模板**，
+harness-demo 是一个 Spring Boot 3.4 + Java 17 项目，定位为 **Claude Code Java 工程脚手架模板**,
 用于演示和测试 Claude Code harness 能力，供团队 fork 后作为新项目起点。
 
 关键约束：

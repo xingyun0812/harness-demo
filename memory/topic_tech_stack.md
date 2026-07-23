@@ -4,7 +4,7 @@ description: 技术栈与版本约束
 ---
 
 - 语言：Java 17
-- 框架：Spring Boot 3.2.5
+- 框架：Spring Boot 3.4.7
 - 构建：Maven 3.9+（或用 `./mvnw`）
 - ORM：MyBatis-Plus 3.5.9（不使用 Spring Data JPA，见 ADR-001）
 - 数据库迁移：Flyway（H2/MySQL 启用，Kingbase 默认禁用，见 ADR-003）

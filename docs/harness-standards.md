@@ -9,7 +9,7 @@
 | 项目 | 值 |
 |------|-----|
 | 语言 | Java 17 |
-| 框架 | Spring Boot 3.2.5 |
+| 框架 | Spring Boot 3.4.7 |
 | 构建 | Maven |
 
 ### 1.2 代码风格 — Checkstyle + Google Style
@@ -126,20 +126,26 @@ public List<UserResponse> listAll() { ... }
 - 工作流：Issue → feature branch → PR → review → merge
 - 禁止直推 `main`（三层防护：Claude PreToolUse hook + Git pre-push hook + GitHub branch protection，见 2.3 / 4.5 / 2.6）
 
-### 2.2 Pre-commit Hook — Checkstyle
+### 2.2 Pre-commit Hook — Checkstyle + Doc Sync
 
 **位置**：`.git/hooks/pre-commit`（由 `scripts/setup-hooks.sh` 安装）
 
 **生效时机**：每次 `git commit` 前
 
 ```bash
-if ! mvn checkstyle:check -q 2>/dev/null; then
-    echo "Checkstyle failed. Fix issues before committing."
-    exit 1
-fi
+# 1. 文档同步检查（防止版本漂移）
+bash scripts/doc-sync-check.sh
+
+# 2. 代码风格检查
+mvn checkstyle:check -q
 ```
 
-**效果**：代码风格不合格 → commit 被中断。
+**效果**：文档与代码不同步 或 代码风格不合格 → commit 被中断。
+
+**Doc Sync 检查内容**：
+- Spring Boot 版本一致性（pom.xml vs 各文档）
+- 文件引用有效性（README 引用的脚本/配置是否存在）
+- 关键配置项同步（覆盖率阈值等）
 
 ### 2.3 Pre-push Hook — 保护 main（Git 侧，权威）
 
@@ -225,7 +231,7 @@ chore:     构建/工具维护
 **内容覆盖**：
 
 - 构建/测试/检查/安全扫描命令
-- 代码标准（Java 17, Spring Boot 3.2, Checkstyle Google）
+- 代码标准（Java 17, Spring Boot 3.4, Checkstyle Google）
 - 覆盖率门禁值（80%）
 - 架构决策记录要求（`docs/adr/`）
 - Process（Issue → branch → PR）

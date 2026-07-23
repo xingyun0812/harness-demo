@@ -75,7 +75,7 @@
 
 ## Context
 
-- Spring Boot 3.2 + Java 17 + Maven
+- Spring Boot 3.4 + Java 17 + Maven
 - JUnit 5 + AssertJ + Mockito 测试框架
 - Checkstyle (Google style) + Alibaba p3c PMD 已在 CI 卡
 - 遵循 Controller → Service → Repository 分层（见 `docs/harness-standards.md §1.5`）
