@@ -1,0 +1,44 @@
+version: 2
+updates:
+  # Maven 依赖自动更新
+  - package-ecosystem: maven
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: "Asia/Shanghai"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "java"
+    ignore:
+      # MyBatis-Plus 升级可能破坏 SQL 兼容性，需人工验证
+      - dependency-name: "com.baomidou:*"
+        update-types: ["version-update:semver-major"]
+      # Flyway 大版本升级需评估迁移脚本兼容性
+      - dependency-name: "org.flywaydb:*"
+        update-types: ["version-update:semver-major"]
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    reviewers:
+      - "xingyun0812"
+
+  # GitHub Actions 自动更新
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "09:00"
+      timezone: "Asia/Shanghai"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "chore(deps)"
+      include: "scope"
+    reviewers:
+      - "xingyun0812"
