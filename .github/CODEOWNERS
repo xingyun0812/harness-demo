@@ -1,0 +1,31 @@
+# CODEOWNERS
+#
+# 格式：路径模式  @owner1 @owner2
+# 文档：https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+#
+# 使用此模板时：将 @xingyun0812 替换为你的团队 Lead GitHub 账号。
+# 可以按模块细化，如让 @qa-lead 负责 test/、@devops 负责 .github/。
+
+# ── 默认：所有文件需 Lead review ──────────────────────────────────────
+*                                   @xingyun0812
+
+# ── 架构文档与 ADR：需 Lead + 技术负责人 review ───────────────────────
+/docs/adr/                          @xingyun0812
+/docs/architecture.md               @xingyun0812
+/docs/harness-standards.md          @xingyun0812
+
+# ── CI/CD 与 DevOps：需 Lead review ──────────────────────────────────
+/.github/                           @xingyun0812
+/docker-compose.yml                 @xingyun0812
+/Dockerfile                         @xingyun0812
+
+# ── Claude Code 配置：需 Lead review（影响所有 AI 工具行为）─────────────
+/.claude/                           @xingyun0812
+/CLAUDE.md                          @xingyun0812
+/scripts/                           @xingyun0812
+
+# ── 数据库迁移：变更不可逆，需严格 review ──────────────────────────────
+/src/main/resources/db/migration/   @xingyun0812
+
+# ── 安全相关配置 ────────────────────────────────────────────────────
+/src/main/resources/application*.yml @xingyun0812
