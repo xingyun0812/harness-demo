@@ -29,7 +29,7 @@ public class UserService {
     this.userRepository = userRepository;
   }
 
-  @Transactional
+  @Transactional(rollbackFor = Exception.class)
   public UserResponse create(CreateUserRequest request) {
     User user = User.builder()
         .username(request.username())

@@ -90,7 +90,7 @@ src/main/java/com/example/harnessdemo/
 
 | 操作类型 | 注解 | 说明 |
 |----------|------|------|
-| 写（insert/update/delete） | `@Transactional` | 默认可写，发生异常自动回滚 |
+| 写（insert/update/delete） | `@Transactional(rollbackFor = Exception.class)` | 显式指定 rollbackFor，按 Alibaba p3c 规范避免默认只回滚 RuntimeException 的陷阱 |
 | 只读（select） | `@Transactional(readOnly = true)` | 走读优化路径，并防止误写 |
 
 **位置**：`service/` 层方法上（不要放在 `controller/` 或 `repository/`）
@@ -100,14 +100,14 @@ src/main/java/com/example/harnessdemo/
 **示例**（见 `UserService.java`）：
 
 ```java
-@Transactional
+@Transactional(rollbackFor = Exception.class)
 public UserResponse create(CreateUserRequest request) { ... }
 
 @Transactional(readOnly = true)
 public List<UserResponse> listAll() { ... }
 ```
 
-**为什么强制**：作为模板，写方法不加 `@Transactional` 会让新成员以为可选；等他们加第二个写操作时就会遗漏，导致脏数据。
+**为什么强制 `rollbackFor`**：Spring `@Transactional` 默认只回滚 `RuntimeException` 和 `Error`，受检异常（如 `IOException`）不回滚。显式 `rollbackFor = Exception.class` 确保所有异常都触发回滚，避免漏回滚导致脏数据。Alibaba p3c 的 `TransactionMustHaveRollbackRule` 会强制此规则（`mvn pmd:check`）。
 
 ---
 
