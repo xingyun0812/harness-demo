@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 健康检查控制器.
  *
- * @author xingyun0812
+ * @author <your-name>
  */
 @Tag(name = "健康检查")
 @RestController

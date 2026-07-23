@@ -2,7 +2,7 @@
 
 ## Current Phase
 
-Scaffold complete with health endpoint, User CRUD API, and two rounds of review-driven fixes (P0 + P1). CI green, docs in sync.
+Scaffold complete with health endpoint, User CRUD API, and three rounds of review-driven fixes (P0 + P1 + P2). CI green, docs in sync, project ready as template.
 
 ## What's Done
 
@@ -29,8 +29,9 @@ Scaffold complete with health endpoint, User CRUD API, and two rounds of review-
 - [x] Logback configuration (logback-spring.xml)
 - [x] P0 review fixes (PR #5): coverage 80% unified, ADR-004 aligned, client/ package, typed exception routing, real Claude hooks
 - [x] P1 review fixes (PR #6): OWASP aligned, @Transactional, HealthService real DB probe, docker healthcheck fix, session-handoff update
+- [x] P2 review fixes (PR #7): agent prompts expanded, TraceIdFilter write-back + tests, .editorconfig, Kingbase Flyway aligned, memory/ filled, @author templated, launch.json documented
 
 ## Next Actions
 
 - Add Spring Security baseline if required
-- P2 polish: agent prompt expansion, TraceIdFilter write-back, .editorconfig, memory/ fill, @author template
+- All review findings (P0 + P1 + P2) addressed — ready to promote as engineering template

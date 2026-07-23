@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * Spring Boot 应用入口.
  *
- * @author xingyun0812
+ * @author <your-name>
  */
 @SpringBootApplication
 public class HarnessDemoApplication {

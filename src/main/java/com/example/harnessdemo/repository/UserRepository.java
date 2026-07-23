@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 /**
  * 用户 MyBatis-Plus Mapper.
  *
- * @author xingyun0812
+ * @author <your-name>
  */
 @Mapper
 public interface UserRepository extends BaseMapper<User> {

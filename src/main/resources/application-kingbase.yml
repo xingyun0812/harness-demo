@@ -5,4 +5,8 @@ spring:
     username: ${DATASOURCE_USERNAME:system}
     password: ${DATASOURCE_PASSWORD:system}
   flyway:
-    enabled: false
+    # Flyway 对 Kingbase8 的方言支持目前不稳定（依赖 com.coolerfall.flyway:flyway-database-kingbase
+    # 是社区实现，非 Flyway 官方）。Kingbase 环境的 schema 由 DBA 手动维护。
+    # 详见 docs/adr/ADR-003-flyway.md 的 Consequences。
+    # 如需启用：改为 true，并验证 migration 脚本在 Kingbase 上可执行。
+    enabled: ${KINGBASE_FLYWAY_ENABLED:false}
