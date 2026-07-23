@@ -20,6 +20,9 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Doc Sync Check
+        run: bash scripts/doc-sync-check.sh --ci
+
       - name: Checkstyle
         run: mvn checkstyle:check -q
 

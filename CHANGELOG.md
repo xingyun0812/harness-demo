@@ -72,7 +72,7 @@
 
 ### Added
 
-- Initial project scaffold with Spring Boot 3.2 + Java 17
+- Initial project scaffold with Spring Boot 3.4 + Java 17
 - Maven build configuration with JaCoCo coverage and OWASP dependency check
 - CLAUDE.md with project instructions for Claude Code
 - .claude/ directory with settings, launch config, agents, workflows, hooks

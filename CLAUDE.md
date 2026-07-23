@@ -36,12 +36,35 @@ mvn org.owasp:dependency-check-maven:check
 ## Code Standards
 
 - **Language**: Java 17
-- **Framework**: Spring Boot 3.2.x
+- **Framework**: Spring Boot 3.4.x
 - **Build**: Maven
 - **Style**: Checkstyle (Google style)
 - **Coverage Gate**: 80% line coverage (JaCoCo)
 - **Architecture Decisions**: `docs/adr/` — mandatory for non-trivial choices
 - **Process**: Issue → feature branch → PR — No direct pushes to `main`
+
+## Agent Auto-Trigger
+
+本项目配置了自动触发机制，在关键节点自动运行 agent：
+
+| 触发时机 | Agent | 方式 | 说明 |
+|---------|-------|------|------|
+| `git commit` | eval-gate | pre-commit hook | 自动运行 checkstyle + PMD + test + coverage |
+| PR 创建/更新 | code-review | GitHub Actions | 自动运行 CI + 评论审查结果 |
+| Claude 会话 | code-review | settings.json | 检测到代码变更时提示审查 |
+
+**手动触发方式：**
+```bash
+# 代码审查
+/agent code-review
+
+# 质量门禁
+/agent eval-gate
+
+# 辅助脚本
+bash scripts/auto-trigger-agent.sh code-review
+bash scripts/auto-trigger-agent.sh eval-gate
+```
 
 ## Interaction Rules
 
@@ -78,6 +101,14 @@ mvn org.owasp:dependency-check-maven:check
 - `README.md` — 功能或使用方式变更时
 - `.github/ISSUE_TEMPLATE/` `.github/PULL_REQUEST_TEMPLATE.md` — 流程变更时
 - `CHANGELOG.md` — 版本发布时
+
+**验证文档同步：**
+```bash
+bash scripts/doc-sync-check.sh    # 本地检查
+bash scripts/doc-sync-check.sh --ci  # CI 模式（严格）
+```
+
+**自动防护**：`git commit` 前会自动运行 doc-sync-check，版本漂移会阻断提交。
 
 ## Config & Deploy
 

@@ -34,5 +34,19 @@
         ]
       }
     ]
+  },
+  "agents": {
+    "auto_trigger": {
+      "on_session_start": {
+        "condition": "git diff --name-only | grep -E '\.(java|xml|yml|md)
+",
+        "agent": "code-review",
+        "message": "检测到代码变更，自动运行代码审查。"
+      },
+      "on_pr_create": {
+        "agent": "code-review",
+        "message": "PR 创建，自动运行代码审查。"
+      }
+    }
   }
 }

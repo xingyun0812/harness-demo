@@ -7,7 +7,7 @@
 | 文件 | 主题 | 关键词 |
 |------|------|--------|
 | [topic_project_root.md](topic_project_root.md) | 项目根上下文 | 模板定位、覆盖率门禁、分层、ADR 要求 |
-| [topic_tech_stack.md](topic_tech_stack.md) | 技术栈与版本 | Java 17, Spring Boot 3.2, MyBatis-Plus, JaCoCo 80% |
+| [topic_tech_stack.md](topic_tech_stack.md) | 技术栈与版本 | Java 17, Spring Boot 3.4, MyBatis-Plus, JaCoCo 80% |
 | [topic_gotchas.md](topic_gotchas.md) | 已知踩坑 | H2 共享、@Transactional rollbackFor、字符串控制流、Kingbase Flyway、curl/wget、OWASP、hooks |
 | [topic_workflow.md](topic_workflow.md) | 开发流程 | clone → hooks → branch → verify → PR → merge |
 

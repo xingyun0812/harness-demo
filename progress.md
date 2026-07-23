@@ -1,6 +1,6 @@
 # Current Active Feature
 
-None — M1–M6 complete (harness setup, health, CRUD, P0, P1, P2 review fixes).
+M7: Doc Sync Guard — 防止代码与文档版本漂移的自动化机制
 
 ## Milestones
 
@@ -12,9 +12,14 @@ None — M1–M6 complete (harness setup, health, CRUD, P0, P1, P2 review fixes)
 | M4: P0 Review Fixes (PR #5) | Done | 2026-07-22 |
 | M5: P1 Review Fixes (PR #6) | Done | 2026-07-23 |
 | M6: P2 Review Fixes (PR #7) | Done | 2026-07-23 |
+| M7: Doc Sync Guard | In Progress | 2026-07-24 |
 
 ## Next Action
 
-- Merge PR #7 after CI passes
-- Enable GitHub branch protection on `main` (see `docs/harness-standards.md §2.6`)
-- All review findings (P0 + P1 + P2) addressed — project ready as template
+- [x] 修复版本漂移（Spring Boot 3.2.x → 3.4.x）
+- [x] 修复 README 中已删除文件的引用
+- [x] 创建 `scripts/doc-sync-check.sh` 检查脚本
+- [x] 集成到 CI（`.github/workflows/ci.yml`）
+- [x] 集成到 pre-commit hook
+- [ ] 更新文档规范说明
+- [ ] 提交 PR #8
