@@ -30,8 +30,10 @@ Scaffold complete with health endpoint, User CRUD API, and three rounds of revie
 - [x] P0 review fixes (PR #5): coverage 80% unified, ADR-004 aligned, client/ package, typed exception routing, real Claude hooks
 - [x] P1 review fixes (PR #6): OWASP aligned, @Transactional, HealthService real DB probe, docker healthcheck fix, session-handoff update
 - [x] P2 review fixes (PR #7): agent prompts expanded, TraceIdFilter write-back + tests, .editorconfig, Kingbase Flyway aligned, memory/ filled, @author templated, launch.json documented
+- [x] M7 Doc Sync Guard: `scripts/doc-sync-check.sh`, CI integration, pre-commit hook, version drift fixed
 
 ## Next Actions
 
-- Add Spring Security baseline if required
-- All review findings (P0 + P1 + P2) addressed — ready to promote as engineering template
+- [ ] Merge M7 changes (PR #8)
+- [ ] Add Spring Security baseline if required
+- [ ] All review findings (P0 + P1 + P2 + M7) addressed — ready to promote as engineering template

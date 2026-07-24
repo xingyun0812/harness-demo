@@ -36,7 +36,7 @@ mvn org.owasp:dependency-check-maven:check
 ## Code Standards
 
 - **Language**: Java 17
-- **Framework**: Spring Boot 3.2.x
+- **Framework**: Spring Boot 3.4.x
 - **Build**: Maven
 - **Style**: Checkstyle (Google style)
 - **Coverage Gate**: 80% line coverage (JaCoCo)
@@ -78,6 +78,14 @@ mvn org.owasp:dependency-check-maven:check
 - `README.md` — 功能或使用方式变更时
 - `.github/ISSUE_TEMPLATE/` `.github/PULL_REQUEST_TEMPLATE.md` — 流程变更时
 - `CHANGELOG.md` — 版本发布时
+
+**验证文档同步：**
+```bash
+bash scripts/doc-sync-check.sh    # 本地检查
+bash scripts/doc-sync-check.sh --ci  # CI 模式（严格）
+```
+
+**自动防护**：`git commit` 前会自动运行 doc-sync-check，版本漂移会阻断提交。
 
 ## Config & Deploy
 

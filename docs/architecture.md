@@ -2,14 +2,14 @@
 
 ## System Context
 
-harness-demo is a Spring Boot 3.2 web application using Java 17.
+harness-demo is a Spring Boot 3.4 web application using Java 17.
 
 ## Technology Stack
 
 | Component | Technology |
 |-----------|-----------|
 | Language | Java 17 |
-| Framework | Spring Boot 3.2.x |
+| Framework | Spring Boot 3.4.x |
 | Build | Maven |
 | Testing | JUnit 5 + AssertJ |
 | Coverage | JaCoCo (80% threshold) |

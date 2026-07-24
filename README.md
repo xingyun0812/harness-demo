@@ -17,10 +17,11 @@ git remote set-url origin git@github.com:<your-org>/<your-project>.git
 ### 第二步：一键重命名
 
 ```bash
-bash scripts/rename-template.sh com.yourcompany.yourproject your-project-name
+# 手动全局替换占位符（推荐使用 IDE 全局搜索替换）
+# 或使用 cookiecutter / maven archetype 等工具
 ```
 
-此脚本会自动替换所有硬编码的占位符（包名、artifactId、应用名等）。详见 [必须修改的内容](#必须修改的内容)。
+详见下方 [必须修改的内容](#必须修改的内容) 手动替换指南。
 
 ### 第三步：初始化 Git & 验证
 
@@ -41,8 +42,7 @@ mvn clean verify    # 确认基线绿色（37 个测试，0 失败）
 
 ## 必须修改的内容
 
-Fork 后必须替换下表中所有占位符，可用 `bash scripts/rename-template.sh` 一键完成，
-或手动全局搜索以下关键词：
+Fork 后必须手动替换下表中所有占位符（推荐使用 IDE 全局搜索替换）：
 
 | 搜索关键词 | 需替换为 | 影响文件 |
 |-----------|---------|---------|
@@ -50,7 +50,7 @@ Fork 后必须替换下表中所有占位符，可用 `bash scripts/rename-templ
 | `harnessdemo` | 你的包名（无分隔符） | 目录路径 + Java 包名 |
 | `harness-demo` | 你的项目名（kebab-case） | `pom.xml`, `application.yml`, `docker-compose.yml`, `CLAUDE.md` 等 |
 | `Demo project for Claude Code harness setup` | 你的项目描述 | `pom.xml` |
-| `xingyun0812` | 你的 GitHub 账号 | `.github/CODEOWNERS`, `.github/dependabot.yml` |
+| `xingyun0812` | 你的 GitHub 账号 | `.github/CODEOWNERS` |
 
 ---
 

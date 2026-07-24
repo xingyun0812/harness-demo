@@ -8,10 +8,18 @@ set -euo pipefail
 HOOKS_DIR="$(git rev-parse --git-dir)/hooks"
 PROJECT_DIR="$(git rev-parse --show-toplevel)"
 
-# Pre-commit hook: run checkstyle before each commit
+# Pre-commit hook: run checkstyle + doc sync check before each commit
 cat > "$HOOKS_DIR/pre-commit" << 'HOOK'
 #!/usr/bin/env bash
 set -euo pipefail
+
+echo "Running Doc Sync Check..."
+if ! bash scripts/doc-sync-check.sh 2>/dev/null; then
+    echo "Doc sync check failed. Fix documentation drift before committing."
+    exit 1
+fi
+echo "Doc sync check passed."
+
 echo "Running Checkstyle..."
 if ! mvn checkstyle:check -q 2>/dev/null; then
     echo "Checkstyle failed. Fix issues before committing."
