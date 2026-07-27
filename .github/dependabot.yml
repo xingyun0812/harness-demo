@@ -29,6 +29,10 @@ updates:
       # springdoc 3.x 与 Spring Boot 3.4.x 存在 bean 冲突，等 Spring Boot 升级后再评估
       - dependency-name: "org.springdoc:*"
         update-types: ["version-update:semver-major"]
+      # Checkstyle 13.x 要求 Java 21，项目当前使用 Java 17
+      - dependency-name: "com.puppycrawl.tools:checkstyle"
+        versions: [">=13.0.0"]
+      # JaCoCo 升级由 Dependabot 自动创建，人工合并前需验证覆盖率 gate
     commit-message:
       prefix: "chore(deps)"
       include: "scope"
