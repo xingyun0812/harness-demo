@@ -215,11 +215,14 @@
                 </executions>
             </plugin>
 
-            <!-- p3c-pmd (Alibaba coding rules) -->
+            <!-- p3c-pmd (Alibaba coding rules) — 锁定 PMD 6.x 以兼容 p3c-pmd 2.x
+                 p3c-pmd 仍绑定 PMD 6.x API（p3c-pmd 2.1.1 依赖 pmd 6.15.0），
+                 pmd-core/pmd-java 6.55.0 是 maven-pmd-plugin 3.21.x 系列的默认版本，
+                 显式声明并锁定版本防止 Dependabot 升级误触发。 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-pmd-plugin</artifactId>
-                <version>3.21.0</version>
+                <version>3.21.2</version>
                 <dependencies>
                     <dependency>
                         <groupId>com.alibaba.p3c</groupId>

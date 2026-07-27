@@ -19,6 +19,16 @@ updates:
       # Flyway 大版本升级需评估迁移脚本兼容性
       - dependency-name: "org.flywaydb:*"
         update-types: ["version-update:semver-major"]
+      # PMD 7.x 与 p3c-pmd 2.x 不兼容（p3c-pmd 绑定 PMD 6.x API）
+      - dependency-name: "org.apache.maven.plugins:maven-pmd-plugin"
+        versions: [">=3.22.0"]
+      - dependency-name: "net.sourceforge.pmd:*"
+        versions: [">=7.0.0"]
+      - dependency-name: "com.alibaba.p3c:*"
+        versions: [">=2.2.0"]
+      # springdoc 3.x 与 Spring Boot 3.4.x 存在 bean 冲突，等 Spring Boot 升级后再评估
+      - dependency-name: "org.springdoc:*"
+        update-types: ["version-update:semver-major"]
     commit-message:
       prefix: "chore(deps)"
       include: "scope"
