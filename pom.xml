@@ -82,7 +82,7 @@
         <dependency>
             <groupId>com.coolerfall.flyway</groupId>
             <artifactId>flyway-database-kingbase</artifactId>
-            <version>10.22.0</version>
+            <version>10.22.1</version>
         </dependency>
 
         <!-- H2 for dev/test -->
